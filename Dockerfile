@@ -43,10 +43,10 @@ sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /etc/php5/fpm/
 sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /etc/php5/fpm/pool.d/www.conf
 
 ADD ./00-docker-base.ini /etc/php5/fpm/conf.d/00-docker-base.ini
+ADD ./00-docker-base.ini /etc/php5/cli/conf.d/00-docker-base.ini
 
 # fix ownership of sock file for php-fpm
-RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/www.conf && \
-find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
+RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/www.conf
 
 # www root
 RUN mkdir /www-root && \
